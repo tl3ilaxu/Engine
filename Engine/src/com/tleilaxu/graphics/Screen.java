@@ -5,7 +5,7 @@ import com.tleilaxu.graphics.images.Image;
 
 public class Screen {
 	private int w,h;
-	private int[] pixels;
+	public int[] pixels;
 	public Screen(int w, int h){
 		this.w = w;
 		this.h = h;
@@ -14,26 +14,24 @@ public class Screen {
 	public void drawImage(int x, int y, Image image) {
 		for (int i = 0; i < image.getHeight(); i++) {
 			for (int j = 0; j < image.getWidth(); j++) {
-				setPixels(x + j, y + i, image.getPixels()[j + i * image.getHeight()]);
+				setPixels(x + j, y + i, image.getPixels()[j + i * image.getWidth()]);
 			}
 		}
 	}
-	public void drawFilter(Filter filters){
-		//TODO: fixx
+	public void drawFilter(Filter filter){
+		filter.apply();
+		drawImage(filter.getX(), filter.getY(), filter.getImage());
 	}
 	public void setPixels(int x, int y, int color){
 		if (x < 0 | y < 0 | x + y * h > pixels.length)return;
 		if(color == 0xffff00ff)return;
-		pixels[x + y * h] = color;
+		pixels[x + y * w] = color;
 	}
 	public void clear() {
 		for (int i = 0; i < pixels.length; i++) {
 			pixels[i] = 0;
 		}
 		
-	}
-	public int[] getPixels() {
-		return pixels;
 	}
 
 }

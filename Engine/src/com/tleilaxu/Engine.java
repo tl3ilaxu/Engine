@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import com.tleilaxu.entity.DrawableEntity;
 import com.tleilaxu.geometry.Geometry;
 import com.tleilaxu.graphics.Screen;
+import com.tleilaxu.graphics.images.Image;
 import com.tleilaxu.level.Level;
 
 public class Engine extends Canvas implements Runnable{
@@ -20,6 +21,7 @@ public class Engine extends Canvas implements Runnable{
 	private JFrame frame;
 	private Screen screen;
 	private Level level;
+	
 	private BufferedImage image;
 	private int[] pixels;
 	
@@ -31,13 +33,18 @@ public class Engine extends Canvas implements Runnable{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setLayout(new BorderLayout());
+		frame.add(this);
 		frame.setVisible(true);
 		image = new BufferedImage(frame.getWidth(), frame.getHeight(), BufferedImage.TYPE_INT_RGB);
 		pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
-		frame.add(this);
 		
 		screen = new Screen(frame.getWidth(), frame.getHeight());
 		level = new Level();
+		int[] pix = new int[50*50];
+		for (int i = 0; i < pix.length; i++) {
+			pix[i] = 0xffff0000;
+		}
+		level.add(Geometry.generateLine(100, 100, 500, 500, 0xffffffff));
 	}
 	public void start() {
 		running = true;
@@ -89,9 +96,9 @@ public class Engine extends Canvas implements Runnable{
 		}
 		screen.clear();
 		level.render(screen);
-	
+		
 		for (int i = 0; i < pixels.length; i++) {
-			pixels[i] = screen.getPixels()[i];
+			pixels[i] = screen.pixels[i];
 		}
 		Graphics g = bs.getDrawGraphics();
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
