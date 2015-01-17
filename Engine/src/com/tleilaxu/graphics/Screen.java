@@ -26,5 +26,14 @@ public class Screen {
 		if(color == 0xffff00ff)return;
 		pixels[x + y * h] = color;
 	}
+	public void clear() {
+		for (int i = 0; i < pixels.length; i++) {
+			pixels[i] = 0;
+		}
+		
+	}
+	public int[] getPixels() {
+		return pixels;
+	}
 
 }

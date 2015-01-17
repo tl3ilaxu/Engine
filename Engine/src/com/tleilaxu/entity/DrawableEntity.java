@@ -17,4 +17,8 @@ public class DrawableEntity extends Entity{
 	}
 	public void update() {}
 
+	public Image getImage() {
+		return image;
+	}
+
 }
