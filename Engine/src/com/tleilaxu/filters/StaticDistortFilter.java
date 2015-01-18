@@ -2,6 +2,7 @@ package com.tleilaxu.filters;
 
 import java.util.Random;
 
+import com.tleilaxu.Timer;
 import com.tleilaxu.graphics.images.Image;
 
 public class StaticDistortFilter extends Filter {
@@ -9,17 +10,21 @@ public class StaticDistortFilter extends Filter {
 	private int currentFrame = 0;
 	private int backsnappyness = 8;
 	private int originalFrame = 3;
+	private double updateSpeed = 0.03;
 
 	private int numFrames = 100;
 
 	private Random r;
 	private double[][] frames;
 	private Image original;
+	private Timer timer;
 
 	public StaticDistortFilter(int x, int y, Image image) {
 		super(x - strenght, y, image);
-		r = new Random();
 		original = image;
+		r = new Random();
+		timer = new Timer();
+		
 		frames = new double[numFrames][image.getHeight()];
 		for (int i = 0; i < numFrames; i++) {
 			if (i % originalFrame == 0) {
@@ -38,7 +43,11 @@ public class StaticDistortFilter extends Filter {
 	}
 
 	public void update() {
-		currentFrame++;
+		timer.time();
+		if(timer.getTime() > Timer.toMillSeconds(updateSpeed)){
+			currentFrame++;
+			timer.setTime(0);
+		}
 		if (currentFrame >= original.getHeight())
 			currentFrame = 0;
 	}

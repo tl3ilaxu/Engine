@@ -23,7 +23,7 @@ public class Screen {
 		drawImage(x + filter.getX(), y + filter.getY(), filter.getImage());
 	}
 	public void setPixels(int x, int y, int color){
-		if (x < 0 | y < 0 | x + y * h > pixels.length)return;
+		if (x < 0 || y < 0 || x >= w || y >= h)return;
 		if(color == 0xffff00ff)return;
 		pixels[x + y * w] = color;
 	}

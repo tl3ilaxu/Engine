@@ -21,11 +21,13 @@ public class Image {
 	public int[] getPixels() {
 		return pixels;
 	}
-	public int getPixel(int x, int y){
-		if (x < 0 || y < 0)
-			return -1;
-		if (x + y * h > pixels.length)
-			return -1;
+	public int getPixel(int x, int y) throws ArrayIndexOutOfBoundsException{
+		if (x < 0 || y < 0 || x > w || y > h){
+			throw new ArrayIndexOutOfBoundsException();
+		}
+//			return -1;
+//		if ((x + y * w) > pixels.length)
+//			return -1;
 		return pixels[x + y * w];
 	}
 	public void setPixel(int x, int y, int color) {
