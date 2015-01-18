@@ -1,0 +1,17 @@
+package com.tleilaxu.graphics.images;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+
+import javax.imageio.ImageIO;
+
+public class ImageLoader {
+	public static Image load(String path){
+		File file = new File(path);
+		if (file.exists()){
+			BufferedImage img = ImageIO.read(file);
+		}
+		return null;
+		
+	}
+}

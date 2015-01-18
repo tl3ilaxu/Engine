@@ -1,0 +1,34 @@
+package com.tleilaxu.filters;
+
+import java.util.Random;
+
+import com.tleilaxu.graphics.images.Image;
+
+public class SquishFilter extends Filter{
+	private int strenght = 5;
+	private int currentFrame = 0;
+	
+	private int numFrames = 100;
+	
+	private Random r;
+	private double[][] frames;
+	public SquishFilter(int x, int y, Image image) {
+		super(x, y, image);
+		r = new Random();
+		frames = new double[numFrames][image.getHeight()];
+		for (int i = 0; i < numFrames; i++) {
+			for (int j = 0; j < image.getHeight(); j++) {
+				frames[i][j] = r.nextDouble() + r.nextDouble();
+			}
+		}
+	}
+	public void update(){
+		currentFrame++;
+		if (currentFrame >= image.getHeight())currentFrame = 0;
+	}
+
+	public void apply() {
+		
+	}
+
+}

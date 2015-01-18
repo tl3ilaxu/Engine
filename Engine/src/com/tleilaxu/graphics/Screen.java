@@ -18,9 +18,9 @@ public class Screen {
 			}
 		}
 	}
-	public void drawFilter(Filter filter){
+	public void drawFilter(int x, int y, Filter filter){
 		filter.apply();
-		drawImage(filter.getX(), filter.getY(), filter.getImage());
+		drawImage(x + filter.getX(), y + filter.getY(), filter.getImage());
 	}
 	public void setPixels(int x, int y, int color){
 		if (x < 0 | y < 0 | x + y * h > pixels.length)return;

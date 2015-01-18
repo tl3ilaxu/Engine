@@ -1,0 +1,5 @@
+package com.tleilaxu.entity;
+
+public class TestEntity extends DrawableEntity{
+
+}

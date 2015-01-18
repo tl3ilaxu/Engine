@@ -1,0 +1,23 @@
+package com.tleilaxu.filters;
+
+import com.tleilaxu.graphics.images.Image;
+
+public class SquishFilter extends Filter{
+	private int strenght = 5;
+	
+	private int numFrames = 100;
+	
+	private int[][] frames;
+	public SquishFilter(int x, int y, Image image) {
+		super(x, y, image)
+		frames = new int[numFrames][image.getHeight()];
+	}
+	public void update(){
+		
+	}
+
+	public void apply() {
+		
+	}
+
+}

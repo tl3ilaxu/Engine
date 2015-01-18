@@ -1,0 +1,7 @@
+package com.tleilaxu.graphics.images;
+
+public class ImageLoader {
+	public static Image load(String path){
+		
+	}
+}

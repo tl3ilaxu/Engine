@@ -1,0 +1,24 @@
+package com.tleilaxu.graphics.images;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+public class ImageLoader {
+	public static Image load(String path) {
+		File file = new File(path);
+
+		try {
+			BufferedImage img = ImageIO.read(file);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return null;
+
+	}
+}

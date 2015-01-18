@@ -1,0 +1,15 @@
+package com.tleilaxu.entity;
+
+import com.tleilaxu.graphics.images.Image;
+
+public class TestEntity extends DrawableEntity{
+
+	public TestEntity(int x, int y, Image image) {
+		super(x, y, image);
+		// TODO Auto-generated constructor stub
+	}
+	public void update(){
+		
+	}
+
+}

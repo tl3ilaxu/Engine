@@ -10,9 +10,11 @@ import java.awt.image.DataBufferInt;
 import javax.swing.JFrame;
 
 import com.tleilaxu.entity.DrawableEntity;
+import com.tleilaxu.entity.TestEntity;
 import com.tleilaxu.geometry.Geometry;
 import com.tleilaxu.graphics.Screen;
 import com.tleilaxu.graphics.images.Image;
+import com.tleilaxu.graphics.images.ImageLoader;
 import com.tleilaxu.level.Level;
 
 public class Engine extends Canvas implements Runnable{
@@ -44,7 +46,8 @@ public class Engine extends Canvas implements Runnable{
 		for (int i = 0; i < pix.length; i++) {
 			pix[i] = 0xffff0000;
 		}
-		level.add(Geometry.generateLine(100, 100, 500, 500, 0xffffffff));
+		level.add(new TestEntity(50, 50, ImageLoader.load("res/test.png")));
+//		level.add(Geometry.generateLine(100, 100, 500, 500, 0xffffffff));
 	}
 	public void start() {
 		running = true;
@@ -86,7 +89,7 @@ public class Engine extends Canvas implements Runnable{
 		System.exit(0);
 	}
 	public void update(){
-		
+		level.update();
 	}
 	public void render(){
 		BufferStrategy bs = getBufferStrategy();

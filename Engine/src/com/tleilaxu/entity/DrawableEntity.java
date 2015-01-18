@@ -5,7 +5,7 @@ import com.tleilaxu.graphics.images.Image;
 
 
 public class DrawableEntity extends Entity{
-	private Image image;
+	protected Image image;
 	public DrawableEntity(int x, int y, Image image) {
 		super(x, y);
 		this.image = image;

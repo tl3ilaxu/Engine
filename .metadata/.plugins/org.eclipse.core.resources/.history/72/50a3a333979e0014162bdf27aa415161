@@ -1,0 +1,12 @@
+package com.tleilaxu.filters;
+
+import com.tleilaxu.entity.DrawableEntity;
+import com.tleilaxu.graphics.images.Image;
+
+public class Filter extends DrawableEntity{
+
+	public Filter(int x, int y, Image image) {
+		super(x, y, image);
+	}
+
+}

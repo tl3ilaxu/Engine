@@ -1,2 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy/>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="java.awt.image.DataBufferInt"/>
+<fullyQualifiedTypeName name="java.awt.BorderLayout"/>
+<fullyQualifiedTypeName name="com.tleilaxu.entity.Entity"/>
+<fullyQualifiedTypeName name="com.tleilaxu.level.Level"/>
+<fullyQualifiedTypeName name="com.tleilaxu.graphics.images.Image"/>
+<fullyQualifiedTypeName name="com.tleilaxu.geometry.Geometry"/>
+<fullyQualifiedTypeName name="com.tleilaxu.entity.DrawableEntity"/>
+</qualifiedTypeNameHistroy>

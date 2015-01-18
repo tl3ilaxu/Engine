@@ -21,12 +21,18 @@ public class Image {
 	public int[] getPixels() {
 		return pixels;
 	}
-
+	public int getPixel(int x, int y){
+		if (x < 0 || y < 0)
+			return -1;
+		if (x + y * h > pixels.length)
+			return -1;
+		return pixels[x + y * w];
+	}
 	public void setPixel(int x, int y, int color) {
 		if (x < 0 || y < 0)
 			return;
 		if (x + y * h > pixels.length)
 			return;
-		pixels[x + y * h] = color;
+		pixels[x + y * w] = color;
 	}
 }
