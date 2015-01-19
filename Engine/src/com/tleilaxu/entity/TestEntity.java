@@ -40,7 +40,7 @@ public class TestEntity extends Entity{
 		screen.drawImage(x+300, y, ImageEditor.getGreenChannel(green));
 		screen.drawImage(x+600, y, ImageEditor.getBlueChannel(blue));
 		screen.drawImage(x, y+100, image);
-		screen.drawImage(x+300, y+100, ImageEditor.blendImages(red, green , blue));
+		screen.drawImage(x+300, y+150, ImageEditor.blendImages(blue, green));
 		
 //		screen.drawFilter(x,y, filter);
 	}

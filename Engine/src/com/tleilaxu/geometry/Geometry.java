@@ -10,7 +10,7 @@ public class Geometry {
 		
 		int[] pixels = new int[(w+1)*(h+1)];
 		for (int i = 0; i < pixels.length; i++) {
-			pixels[i] = 0xffff0000;
+			pixels[i] = 0xffff00ff;
 		}
 		int ly = 0;
 		pixels[0] = 0xffffffff;

@@ -1,5 +1,6 @@
 package com.tleilaxu.graphics;
 
+import com.tleilaxu.entity.DrawableEntity;
 import com.tleilaxu.filters.Filter;
 import com.tleilaxu.graphics.images.Image;
 
@@ -21,6 +22,9 @@ public class Screen {
 	public void drawFilter(int x, int y, Filter filter){
 		filter.apply();
 		drawImage(x + filter.getX(), y + filter.getY(), filter.getImage());
+	}
+	public void drawEntity(DrawableEntity e){
+		drawImage(e.getX(), e.getY(), e.getImage());
 	}
 	public void setPixels(int x, int y, int color){
 		if (x < 0 || y < 0 || x >= w || y >= h)return;
