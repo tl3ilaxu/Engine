@@ -143,6 +143,14 @@ public class Vector {
 		}
 		return dot;
 	}
+	public Vector getMultipliedByMatrix(Matrix m){
+		double[] vals = new double[m.getWidth()];
+		Vector[] mv = m.getVectors();
+		for (int i = 0; i < vals.length; i++) {
+			vals[i] = getDot(mv[i]);
+		}
+		return new Vector(vals);
+	}
 	public static boolean areEqualSize(Vector... vs) {
 		int lenght = vs[0].getSize();
 		for (int i = 0; i < vs.length; i++) {
@@ -157,6 +165,13 @@ public class Vector {
 	public Vector getPerpendicular(){
 		double[] vals = c.clone();
 		vals[0] = -vals[0];
+		return new Vector(vals);
+	}
+	public Vector getFlipped(){
+		double[] vals = new double[c.length];
+		for (int i = 0; i < vals.length; i++) {
+			vals[i] = -c[i];
+		}
 		return new Vector(vals);
 	}
 

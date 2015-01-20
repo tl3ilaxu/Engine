@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import com.tleilaxu.geometry.Geometry;
 import com.tleilaxu.graphics.Screen;
 import com.tleilaxu.level.Level;
+import com.tleilaxu.math.Matrix;
 import com.tleilaxu.math.Vector;
 
 public class Engine extends Canvas implements Runnable{
@@ -26,11 +27,14 @@ public class Engine extends Canvas implements Runnable{
 	
 	public static void main(String [] args){
 //		new Engine().start();
+
 		Vector v = new Vector(1,2,3);
-		Vector v2 = new Vector(1,2,3);
-		System.out.println(v.toString());
-		System.out.println(v2.toString());
-		System.out.println(v.getDot(v2));
+		Matrix m2 = new Matrix();
+		System.out.println(v.getMultipliedByMatrix(m2));
+//		System.out.println(m1.toString());
+//		System.out.println(m2.toString());
+//		m1.multiplyMatrix(m2);
+//		System.out.println(m1.toString());
 	}
 	public Engine(){
 		frame = new JFrame(TITLE);
