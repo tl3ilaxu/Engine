@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 
@@ -17,7 +18,7 @@ import com.tleilaxu.math.Vector;
 
 public class Engine extends Canvas implements Runnable{
 	public static final String TITLE = "Engine";
-	private boolean running = false;
+	private boolean running;
 	private JFrame frame;
 	private Screen screen;
 	private Level level;
@@ -26,41 +27,32 @@ public class Engine extends Canvas implements Runnable{
 	private int[] pixels;
 	
 	public static void main(String [] args){
-//		new Engine().start();
-
-		Vector v = new Vector(1,2,3);
-		Matrix m2 = new Matrix();
-		System.out.println(v.getMultipliedByMatrix(m2));
-//		System.out.println(m1.toString());
-//		System.out.println(m2.toString());
-//		m1.multiplyMatrix(m2);
-//		System.out.println(m1.toString());
+		new Engine().start();
 	}
 	public Engine(){
+		//setup frame
 		frame = new JFrame(TITLE);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setLayout(new BorderLayout());
 		frame.add(this);
 		frame.setVisible(true);
+		//setup canvas
 		image = new BufferedImage(frame.getWidth(), frame.getHeight(), BufferedImage.TYPE_INT_RGB);
 		pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 		
 		screen = new Screen(frame.getWidth(), frame.getHeight());
 		level = new Level();
-		int[] pix = new int[50*50];
-		for (int i = 0; i < pix.length; i++) {
-			pix[i] = 0xffff0000;
-		}
-//		level.add(new TestEntity(50, 50, ImageLoader.load("res/test.png")));
-		level.add(Geometry.generateLine(100, 100, 50, 500, 0xffffffff));
+		level.add(Geometry.generateLine(100, 100, 200, 50, 0xffffffff));
 	}
+	//starts the main thread for the main loop
 	public void start() {
 		running = true;
 		Thread t = new Thread(this);
 		t.start();
 	}
 	public void run() {
+		//fps counter and update limiter
 		long lastTime = System.nanoTime();
 		long lastTimer = System.currentTimeMillis();
 		double ns = 1000000000.0 / 60.0;
@@ -69,6 +61,7 @@ public class Engine extends Canvas implements Runnable{
 		//double delta2 = 0;
 		int frames = 0;
 		int ups = 0;
+		//main loop
 		while (running) {
 			long now = System.nanoTime();
 			delta += (now - lastTime) / ns;
