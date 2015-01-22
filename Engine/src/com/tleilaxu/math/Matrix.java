@@ -60,7 +60,10 @@ public class Matrix {
 		}
 		return v;
 	}
-
+	public void setVector(int i, Vector v){
+		vectors[i] = v;
+	}
+	
 	public String toString() {
 		String returnString = "------- \n";
 		;
@@ -71,5 +74,18 @@ public class Matrix {
 			returnString += "\n";
 		}
 		return returnString + "-------";
+	}
+	public static Matrix getIdent(int s){
+		Vector[] vect = new Vector[s];
+		
+		for (int i = 0; i < vect.length; i++) {
+			double[] vals = new double[s];
+			for (int j = 0; j < s; j++) {
+				vals[j] = 0;
+				if(j == i)vals[j] = 1;
+			}
+			vect[i] = new Vector(vals);
+		}
+		return new Matrix(vect);
 	}
 }

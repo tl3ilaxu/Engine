@@ -10,6 +10,15 @@ public class Image {
 		this.pixels = pixels;
 	}
 
+	public Image(int w, int h) {
+		this.w = w;
+		this.h = h;
+		pixels = new int[w * h];
+		for (int i = 0; i < pixels.length; i++) {
+			pixels[i] = 0xffff00ff;
+		}
+	}
+
 	public int getWidth() {
 		return w;
 	}
@@ -21,19 +30,21 @@ public class Image {
 	public int[] getPixels() {
 		return pixels;
 	}
-	public int getPixel(int x, int y) throws ArrayIndexOutOfBoundsException{
-		if (x < 0 || y < 0 || x > w || y > h){
+
+	public int getPixel(int x, int y) throws ArrayIndexOutOfBoundsException {
+		if (x < 0 || y < 0 || x > w || y > h) {
 			throw new ArrayIndexOutOfBoundsException();
 		}
-//			return -1;
-//		if ((x + y * w) > pixels.length)
-//			return -1;
+		// return -1;
+		// if ((x + y * w) > pixels.length)
+		// return -1;
 		return pixels[x + y * w];
 	}
+
 	public void setPixel(int x, int y, int color) {
 		if (x < 0 || y < 0)
 			return;
-		if (x + y * h > pixels.length)
+		if (x >= w || y >= h)
 			return;
 		pixels[x + y * w] = color;
 	}

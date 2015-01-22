@@ -6,36 +6,64 @@ import com.tleilaxu.graphics.images.Image;
 public class Geometry {
 	public static DrawableEntity generateLine(int x, int y, int x2, int y2,
 			int color) {
-		//TODO : FIX 
-		int w = Math.abs(x - x2);
-		int h = Math.abs(y - y2);
-
-		int ax = x;
-		if (x2 < x)
-			ax = x2;
-		int ay = y;
-		if (y2 < y)
-			ay = y2;
-
-		int[] pixels = new int[(w + 1) * (h + 1)];
-		for (int i = 0; i < pixels.length; i++) {
-			pixels[i] = 0xffff00ff;
-		}
+		int w = x2 - x;
+		int h = y2 - y;
+		if (w == 0)
+			w = 1;
+		if (h == 0)
+			h = 1;
+		
+		int lx = 0;
 		int ly = 0;
-		pixels[0] = 0xffffffff;
-		int D = 2 * h - w;
-		for (int lx = 1; lx < w; lx++) {
-			if (D > 0) {
-				ly++;
-				pixels[lx + ly * w] = 0xffffffff;
-				D = D + (2 * h - 2 * w);
-			} else {
-				pixels[lx + ly * w] = 0xffffffff;
-				D = D + (2 * h);
-			}
-
+		int dx = x;
+		int dy = y;
+		if(h < 0){
+			dy = y2;
+			ly = Math.abs(h);
 		}
-		Image img = new Image(w, h, pixels);
-		return new DrawableEntity(ax, ay, img);
+		if(w < 0){
+			dx = x2;
+			lx = Math.abs(w);
+		}
+		Image img = new Image(Math.abs(w), Math.abs(h));
+		int dx1 = 0, dy1 = 0, dx2 = 0, dy2 = 0;
+		if (w < 0)
+			dx1 = -1;
+		else if (w > 0)
+			dx1 = 1;
+		if (h < 0)
+			dy1 = -1;
+		else if (h > 0)
+			dy1 = 1;
+		if (w < 0)
+			dx2 = -1;
+		else if (w > 0)
+			dx2 = 1;
+		int longest = Math.abs(w);
+		int shortest = Math.abs(h);
+		if (!(longest > shortest)) {
+			longest = Math.abs(h);
+			shortest = Math.abs(w);
+			if (h < 0)
+				dy2 = -1;
+			else if (h > 0)
+				dy2 = 1;
+			dx2 = 0;
+		}
+		int numerator = longest >> 1;
+		for (int i = 0; i <= longest; i++) {
+			img.setPixel(lx, ly, color);
+			numerator += shortest;
+			if (!(numerator < longest)) {
+				numerator -= longest;
+				lx += dx1;
+				ly += dy1;
+			} else {
+				lx += dx2;
+				ly += dy2;
+			}
+		}
+
+		return new DrawableEntity(dx, dy, img);
 	}
 }
