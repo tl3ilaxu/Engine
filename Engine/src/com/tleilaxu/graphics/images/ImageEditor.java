@@ -2,6 +2,8 @@ package com.tleilaxu.graphics.images;
 
 import java.util.ArrayList;
 
+import com.tleilaxu.entity.DrawableEntity;
+
 public class ImageEditor {
 
 	public static Image resizeImage(Image image, int w2, int h2) {
@@ -41,7 +43,7 @@ public class ImageEditor {
 					} catch (Exception e) {
 						value = 0xffff00ff;
 					}
-					
+
 					if (value != 0xffff00ff) {
 						pixelValues.add(value);
 					}
@@ -68,6 +70,48 @@ public class ImageEditor {
 
 		}
 		return new Image(w, h, pixels);
+		// TODO: fix it 
+
+	public static Image blendImages(DrawableEntity... images) {
+		int w = -1;
+		int h = -1;
+		for (int i = 0; i < images.length; i++) {
+			if (w < images[i].getImage().getWidth() + images[i].getX())
+				w = (int) (images[i].getImage().getWidth() + images[i].getX());
+			if (h < images[i].getImage().getHeight() + images[i].getY())
+				h = (int) (images[i].getImage().getHeight() + images[i].getY());
+		}
+		int[] pixels = new int[w * h];
+		ArrayList<Integer> pixelValues = new ArrayList<Integer>();
+		for (int y = 0; y < h; y++) {
+			for (int x = 0; x < w; x++) {
+				for (int i = 0; i < images.length; i++) {
+					int value;
+					try {
+						value = images[i].getImage().getPixel(
+								(int) (x - images[i].getX()),
+								(int) (y - images[i].getY()));
+					} catch (Exception e) {
+						value = 0xffff00ff;
+					}
+
+					if (value != 0xffff00ff) {
+						pixelValues.add(value);
+					}
+				}
+				if (pixelValues.isEmpty()) {
+					pixels[x + y * w] = 0xffff00ff;
+				} else {
+					for (int i = 0; i < pixelValues.size(); i++) {
+						pixels[x + y * w] += pixelValues.get(i)
+								/ (1.0 / pixelValues.size());
+					}
+				}
+				pixelValues.clear();
+			}
+
+		}
+		return new Image(w, h, pixels);
 		// TODO: fix it
 	}
 
@@ -77,7 +121,6 @@ public class ImageEditor {
 			if (image.getPixels()[i] == 0xffff00ff) {
 				pixels[i] = 0xffff00ff;
 			} else {
-//				pixels[i] = ((image.getPixels()[i] >> 16) & 0x0ff) << 16;
 				pixels[i] = image.getPixels()[i] & 0xffff0000;
 				if (pixels[i] == 0 && image.getPixels()[i] != 0) {
 					pixels[i] = 0xffff00ff;
@@ -93,7 +136,6 @@ public class ImageEditor {
 			if (image.getPixels()[i] == 0xffff00ff) {
 				pixels[i] = 0xffff00ff;
 			} else {
-//				pixels[i] = ((image.getPixels()[i] >> 8) & 0x0ff) << 8;
 				pixels[i] = image.getPixels()[i] & 0xff00ff00;
 				if (pixels[i] == 0 && image.getPixels()[i] != 0) {
 					pixels[i] = 0xffff00ff;
@@ -109,7 +151,6 @@ public class ImageEditor {
 			if (image.getPixels()[i] == 0xffff00ff) {
 				pixels[i] = 0xffff00ff;
 			} else {
-//				pixels[i] = (image.getPixels()[i]) & 0x0ff;
 				pixels[i] = image.getPixels()[i] & 0xff0000ff;
 				if (pixels[i] == 0 && image.getPixels()[i] != 0) {
 					pixels[i] = 0xffff00ff;

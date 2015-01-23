@@ -12,24 +12,24 @@ public class Screen {
 		this.h = h;
 		pixels = new int[w * h];
 	}
-	public void drawImage(int x, int y, Image image) {
+	public void drawImage(double x, double y, Image image) {
 		for (int i = 0; i < image.getHeight(); i++) {
 			for (int j = 0; j < image.getWidth(); j++) {
 				setPixels(x + j, y + i, image.getPixels()[j + i * image.getWidth()]);
 			}
 		}
 	}
-	public void drawFilter(int x, int y, Filter filter){
+	public void drawFilter(double x, double y, Filter filter){
 		filter.apply();
 		drawImage(x + filter.getX(), y + filter.getY(), filter.getImage());
 	}
 	public void drawEntity(DrawableEntity e){
 		drawImage(e.getX(), e.getY(), e.getImage());
 	}
-	public void setPixels(int x, int y, int color){
+	public void setPixels(double x, double y, int color){
 		if (x < 0 || y < 0 || x >= w || y >= h)return;
-		if(color == 0xffff00ff)return;
-		pixels[x + y * w] = color;
+		//if(color == 0xffff00ff)return;
+		pixels[(int) (x + y * w)] = color;
 	}
 	public void clear() {
 		for (int i = 0; i < pixels.length; i++) {

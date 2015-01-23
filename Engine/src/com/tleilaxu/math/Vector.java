@@ -65,6 +65,9 @@ public class Vector {
 	public double[] getValues() {
 		return c;
 	}
+	public double getValue(int i){
+		return c[i];
+	}
 
 	public void setValue(int i, double v) {
 		c[i] = v;

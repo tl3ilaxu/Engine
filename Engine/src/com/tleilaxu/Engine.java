@@ -10,6 +10,7 @@ import java.io.IOException;
 
 import javax.swing.JFrame;
 
+import com.tleilaxu.entity.Polygon;
 import com.tleilaxu.entity.TRSMatrix;
 import com.tleilaxu.geometry.Geometry;
 import com.tleilaxu.graphics.Screen;
@@ -28,8 +29,7 @@ public class Engine extends Canvas implements Runnable{
 	private int[] pixels;
 	
 	public static void main(String [] args){
-//		new Engine().start();
-		System.out.println(TRSMatrix.generateRotationMatrix(2, 0.2).toString());
+		new Engine().start();
 	}
 	public Engine(){
 		//setup frame
@@ -45,7 +45,7 @@ public class Engine extends Canvas implements Runnable{
 		
 		screen = new Screen(frame.getWidth(), frame.getHeight());
 		level = new Level();
-		level.add(Geometry.generateLine(200, 200, 100, 100, 0xffffffff));
+		level.add(new Polygon(new Vector(50,50), 3,50));
 
 	}
 	//starts the main thread for the main loop

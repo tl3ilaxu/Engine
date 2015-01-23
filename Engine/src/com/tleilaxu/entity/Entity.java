@@ -1,22 +1,28 @@
 package com.tleilaxu.entity;
 
 import com.tleilaxu.graphics.Screen;
+import com.tleilaxu.math.Vector;
 
 public abstract class Entity {
-	protected int x,y;
-	public Entity(int x, int y){
-		this.x = x;
-		this.y = y;
+	protected Vector pos;
+	public Entity(Vector pos){
+		this.pos = pos;
 	}
 	public abstract void render(Screen screen);
 	public abstract void update();
 
-	public int getX() {
-		return x;
+	public double getX() {
+		return pos.getValue(0);
 	}
 	
-	public int getY() {
-		return y;
+	public double getY() {
+		return pos.getValue(1);
+	}
+	public void setX(double x){
+		pos.setValue(0, x);
+	}
+	public void setY(double y){
+		pos.setValue(1, y);
 	}
 
 }
