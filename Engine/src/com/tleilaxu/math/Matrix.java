@@ -13,7 +13,7 @@ public class Matrix {
 
 	public Matrix getMultipliedMatrix(Matrix m) {
 		if (getWidth() != m.getHeight())
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Matrix heights not the same");
 		int w = getWidth();
 		if (getWidth() > m.getWidth())
 			w = m.getWidth();

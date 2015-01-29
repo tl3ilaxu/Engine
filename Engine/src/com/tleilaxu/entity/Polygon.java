@@ -1,15 +1,12 @@
 package com.tleilaxu.entity;
 
-import java.awt.List;
 import java.util.ArrayList;
 
 import com.tleilaxu.geometry.Geometry;
-import com.tleilaxu.graphics.Screen;
 import com.tleilaxu.graphics.images.Image;
 import com.tleilaxu.graphics.images.ImageEditor;
 import com.tleilaxu.math.Vector;
 
-//TODO: fix artifacting
 public class Polygon extends DrawableEntity {
 	ArrayList<Entity> list = new ArrayList<Entity>();
 
@@ -20,11 +17,13 @@ public class Polygon extends DrawableEntity {
 
 	public Polygon(Vector pos, int edges, double size) {
 		super(pos, new Image(0, 0));
+		if (edges > 30)
+			throw new IllegalArgumentException("Edges exceed maximum number of edges");
 		Vector[] points = new Vector[edges];
 		int i0 = 0;
-		for (int i = 0; i < 360; i += 360 / (edges)) {
-			points[i0] = new Vector(Math.cos(Math.toRadians(i)) * size + pos.getValue(0) * 2, Math.sin(Math.toRadians(i)) * size
-					+ pos.getValue(1) * 2);
+		for (double i = 0; i < 360; i += 360.0 / (double) (edges)) {
+			points[i0] = new Vector(Math.cos(Math.toRadians(i)) * size + pos.getValue(0)+size, Math.sin(Math.toRadians(i)) * size
+					+ pos.getValue(1)+size);
 			i0++;
 		}
 		init(points);
@@ -46,11 +45,10 @@ public class Polygon extends DrawableEntity {
 			e.setY(e.getY() - getY());
 			image = ImageEditor.blendImages(new DrawableEntity(0, 0, image), e);
 		}
-		 DrawableEntity e = Geometry.generateLine(points[points.length - 1],
-		 points[0], 0xffffffff);
-		 e.setX(e.getX() - getX());
-		 e.setY(e.getY() - getY());
-		 image = ImageEditor.blendImages(new DrawableEntity(0, 0, image), e);
+		DrawableEntity e = Geometry.generateLine(points[points.length - 1], points[0], 0xffffffff);
+		e.setX(e.getX() - getX());
+		e.setY(e.getY() - getY());
+		image = ImageEditor.blendImages(new DrawableEntity(0, 0, image), e);
 	}
 
 }

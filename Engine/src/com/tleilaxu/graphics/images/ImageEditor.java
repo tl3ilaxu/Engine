@@ -76,7 +76,7 @@ public class ImageEditor {
 			if (image.getPixels()[i] == 0xffff00ff) {
 				pixels[i] = 0xffff00ff;
 			} else {
-				pixels[i] = image.getPixels()[i] & 0xffff0000;
+				pixels[i] = image.getPixels()[i] & 0xff0000;
 				if (pixels[i] == 0) {
 					pixels[i] = 0xffff00ff;
 				}
@@ -91,7 +91,7 @@ public class ImageEditor {
 			if (image.getPixels()[i] == 0xffff00ff) {
 				pixels[i] = 0xffff00ff;
 			} else {
-				pixels[i] = image.getPixels()[i] & 0xff00ff00;
+				pixels[i] = image.getPixels()[i] & 0x00ff00;
 				if (pixels[i] == 0) {
 					pixels[i] = 0xffff00ff;
 				}
@@ -106,7 +106,7 @@ public class ImageEditor {
 			if (image.getPixels()[i] == 0xffff00ff) {
 				pixels[i] = 0xffff00ff;
 			} else {
-				pixels[i] = image.getPixels()[i] & 0xff0000ff;
+				pixels[i] = image.getPixels()[i] & 0x0000ff;
 				if (pixels[i] == 0) {
 					pixels[i] = 0xffff00ff;
 				}
