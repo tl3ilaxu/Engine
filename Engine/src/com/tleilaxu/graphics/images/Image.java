@@ -31,9 +31,9 @@ public class Image {
 		return pixels;
 	}
 
-	public int getPixel(int x, int y) throws ArrayIndexOutOfBoundsException {
-		if (x < 0 || y < 0 || x > w || y > h) {
-			throw new ArrayIndexOutOfBoundsException();
+	public int getPixel(int x, int y) {
+		if (x < 0 || y < 0 || x >= w || y >= h) {
+			throw new IllegalArgumentException("x or y out of range");
 		}
 		// return -1;
 		// if ((x + y * w) > pixels.length)

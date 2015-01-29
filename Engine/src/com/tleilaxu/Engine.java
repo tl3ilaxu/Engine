@@ -12,8 +12,10 @@ import javax.swing.JFrame;
 
 import com.tleilaxu.entity.Polygon;
 import com.tleilaxu.entity.TRSMatrix;
+import com.tleilaxu.entity.TestEntity;
 import com.tleilaxu.geometry.Geometry;
 import com.tleilaxu.graphics.Screen;
+import com.tleilaxu.graphics.images.ImageLoader;
 import com.tleilaxu.level.Level;
 import com.tleilaxu.math.Matrix;
 import com.tleilaxu.math.Vector;
@@ -46,6 +48,7 @@ public class Engine extends Canvas implements Runnable{
 		screen = new Screen(frame.getWidth(), frame.getHeight());
 		level = new Level();
 		level.add(new Polygon(new Vector(50,50), 3,50));
+		level.add(new TestEntity(new Vector(200,200), ImageLoader.load("res/test.png")));
 
 	}
 	//starts the main thread for the main loop

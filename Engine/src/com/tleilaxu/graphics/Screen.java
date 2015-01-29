@@ -28,7 +28,7 @@ public class Screen {
 	}
 	public void setPixels(double x, double y, int color){
 		if (x < 0 || y < 0 || x >= w || y >= h)return;
-		//if(color == 0xffff00ff)return;
+		if(color == 0xffff00ff)return;
 		pixels[(int) (x + y * w)] = color;
 	}
 	public void clear() {

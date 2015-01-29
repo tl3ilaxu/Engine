@@ -24,53 +24,12 @@ public class ImageEditor {
 	}
 
 	public static Image blendImages(Image... images) {
-		int w = -1;
-		int h = -1;
-		for (int i = 0; i < images.length; i++) {
-			if (w < images[i].getWidth())
-				w = images[i].getWidth();
-			if (h < images[i].getHeight())
-				h = images[i].getHeight();
+		DrawableEntity[] imgs = new DrawableEntity[images.length];
+		for (int i = 0; i < imgs.length; i++) {
+			imgs[i] = new DrawableEntity(0, 0,images[i]);
 		}
-		int[] pixels = new int[w * h];
-		ArrayList<Integer> pixelValues = new ArrayList<Integer>();
-		for (int y = 0; y < h; y++) {
-			for (int x = 0; x < w; x++) {
-				for (int i = 0; i < images.length; i++) {
-					int value;
-					try {
-						value = images[i].getPixel(x, y);
-					} catch (Exception e) {
-						value = 0xffff00ff;
-					}
-
-					if (value != 0xffff00ff) {
-						pixelValues.add(value);
-					}
-					// if (value == 0xffff00ff) {
-					// blendPixels--;
-					// } else {
-					// if (blendPixels <= 0) {
-					// pixels[x + y * w] = 0xffff00ff;
-					// } else {
-					// pixels[x + y * w] += value / (1.0 / blendPixels);
-					// }
-					// }
-				}
-				if (pixelValues.isEmpty()) {
-					pixels[x + y * w] = 0xffff00ff;
-				} else {
-					for (int i = 0; i < pixelValues.size(); i++) {
-						pixels[x + y * w] += pixelValues.get(i)
-								/ (1.0 / pixelValues.size());
-					}
-				}
-				pixelValues.clear();
-			}
-
-		}
-		return new Image(w, h, pixels);
-		// TODO: fix it 
+		return blendImages(imgs);
+	}
 
 	public static Image blendImages(DrawableEntity... images) {
 		int w = -1;
@@ -87,13 +46,11 @@ public class ImageEditor {
 			for (int x = 0; x < w; x++) {
 				for (int i = 0; i < images.length; i++) {
 					int value;
-					try {
-						value = images[i].getImage().getPixel(
-								(int) (x - images[i].getX()),
-								(int) (y - images[i].getY()));
-					} catch (Exception e) {
-						value = 0xffff00ff;
-					}
+					int lx = (int) (x - images[i].getX());
+					int ly = (int) (y - images[i].getY());
+					if (lx < 0 || ly < 0 || lx >= images[i].getImage().getWidth() || ly >= images[i].getImage().getHeight())
+						continue;
+					value = images[i].getImage().getPixel(lx, ly);
 
 					if (value != 0xffff00ff) {
 						pixelValues.add(value);
@@ -103,8 +60,7 @@ public class ImageEditor {
 					pixels[x + y * w] = 0xffff00ff;
 				} else {
 					for (int i = 0; i < pixelValues.size(); i++) {
-						pixels[x + y * w] += pixelValues.get(i)
-								/ (1.0 / pixelValues.size());
+						pixels[x + y * w] += pixelValues.get(i) / (1.0 / pixelValues.size());
 					}
 				}
 				pixelValues.clear();
@@ -112,17 +68,16 @@ public class ImageEditor {
 
 		}
 		return new Image(w, h, pixels);
-		// TODO: fix it
 	}
 
 	public static Image getRedChannel(Image image) {
 		int[] pixels = new int[image.getWidth() * image.getHeight()];
-		for (int i = 0; i < image.getPixels().length; i++) {
+		for (int i = 0; i < pixels.length; i++) {
 			if (image.getPixels()[i] == 0xffff00ff) {
 				pixels[i] = 0xffff00ff;
 			} else {
 				pixels[i] = image.getPixels()[i] & 0xffff0000;
-				if (pixels[i] == 0 && image.getPixels()[i] != 0) {
+				if (pixels[i] == 0) {
 					pixels[i] = 0xffff00ff;
 				}
 			}
@@ -137,7 +92,7 @@ public class ImageEditor {
 				pixels[i] = 0xffff00ff;
 			} else {
 				pixels[i] = image.getPixels()[i] & 0xff00ff00;
-				if (pixels[i] == 0 && image.getPixels()[i] != 0) {
+				if (pixels[i] == 0) {
 					pixels[i] = 0xffff00ff;
 				}
 			}
@@ -152,7 +107,7 @@ public class ImageEditor {
 				pixels[i] = 0xffff00ff;
 			} else {
 				pixels[i] = image.getPixels()[i] & 0xff0000ff;
-				if (pixels[i] == 0 && image.getPixels()[i] != 0) {
+				if (pixels[i] == 0) {
 					pixels[i] = 0xffff00ff;
 				}
 			}

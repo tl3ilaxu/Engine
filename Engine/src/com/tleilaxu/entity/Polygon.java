@@ -23,8 +23,7 @@ public class Polygon extends DrawableEntity {
 		Vector[] points = new Vector[edges];
 		int i0 = 0;
 		for (int i = 0; i < 360; i += 360 / (edges)) {
-			points[i0] = new Vector(Math.cos(Math.toRadians(i)) * size
-					+ pos.getValue(0) * 2, Math.sin(Math.toRadians(i)) * size
+			points[i0] = new Vector(Math.cos(Math.toRadians(i)) * size + pos.getValue(0) * 2, Math.sin(Math.toRadians(i)) * size
 					+ pos.getValue(1) * 2);
 			i0++;
 		}
@@ -42,15 +41,9 @@ public class Polygon extends DrawableEntity {
 		}
 		image = new Image(w, h);
 		for (int i = 0; i < points.length - 1; i++) {
-//			System.out.println(points[i] + " to" + points[i + 1]);
-			DrawableEntity e = Geometry.generateLine(points[i], points[i + 1],
-					0xffffffff);
+			DrawableEntity e = Geometry.generateLine(points[i], points[i + 1], 0xffffffff);
 			e.setX(e.getX() - getX());
 			e.setY(e.getY() - getY());
-			//TODO
-			//scaling doesn't work
-			//first line creates artifact bacause of blend
-			//blending is somhow wrong
 			image = ImageEditor.blendImages(new DrawableEntity(0, 0, image), e);
 		}
 		 DrawableEntity e = Geometry.generateLine(points[points.length - 1],
