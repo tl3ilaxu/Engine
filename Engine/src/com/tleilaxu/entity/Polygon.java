@@ -10,45 +10,49 @@ import com.tleilaxu.math.Vector;
 public class Polygon extends DrawableEntity {
 	ArrayList<Entity> list = new ArrayList<Entity>();
 
-	public Polygon(Vector pos, Vector[] points) {
+	public Polygon(TRSMatrix pos, Vector[] points) {
 		super(pos, new Image(0, 0));
 		init(points);
+		image = Geometry.generatePolygon(points);
 	}
 
-	public Polygon(Vector pos, int edges, double size) {
+	public Polygon(TRSMatrix pos, int edges, double size) {
 		super(pos, new Image(0, 0));
 		if (edges > 30)
 			throw new IllegalArgumentException("Edges exceed maximum number of edges");
 		Vector[] points = new Vector[edges];
 		int i0 = 0;
 		for (double i = 0; i < 360; i += 360.0 / (double) (edges)) {
-			points[i0] = new Vector(Math.cos(Math.toRadians(i)) * size + pos.getValue(0)+size, Math.sin(Math.toRadians(i)) * size
-					+ pos.getValue(1)+size);
+			points[i0] = new Vector(Math.cos(Math.toRadians(i)), Math.sin(Math.toRadians(i)), 1);
 			i0++;
 		}
 		init(points);
+		image = Geometry.generatePolygon(points);
 	}
-
-	private void init(Vector[] points) {
-		int w = 0;
-		int h = 0;
+	public void init(Vector[] points) {
+		//calculate smallest width and height and translate every point over it
+		double sw = 0;
+		double sh = 0;
 		for (int i = 0; i < points.length; i++) {
-			if (points[0].getValue(0) > w)
-				w = (int) points[0].getValue(0);
-			if (points[1].getValue(1) > h)
-				h = (int) points[1].getValue(1);
+			points[i].multiplyByMatrix(pos.getRSMatrix());
 		}
-		image = new Image(w, h);
-		for (int i = 0; i < points.length - 1; i++) {
-			DrawableEntity e = Geometry.generateLine(points[i], points[i + 1], 0xffffffff);
-			e.setX(e.getX() - getX());
-			e.setY(e.getY() - getY());
-			image = ImageEditor.blendImages(new DrawableEntity(0, 0, image), e);
+		for (int i = 0; i < points.length; i++) {
+			double xv = points[i].getValue(0);
+			double yv = points[i].getValue(1);
+			if (xv < sw)
+				sw = xv;
+			if (yv < sh)
+				sh = yv;
+
 		}
-		DrawableEntity e = Geometry.generateLine(points[points.length - 1], points[0], 0xffffffff);
-		e.setX(e.getX() - getX());
-		e.setY(e.getY() - getY());
-		image = ImageEditor.blendImages(new DrawableEntity(0, 0, image), e);
+		for (int i = 0; i < points.length; i++) {
+			points[i].addVec(new Vector(-sw, -sh, 1));
+			System.out.println(points[i]);
+		}
+	}
+	public void update() {
+		super.update();
+
 	}
 
 }

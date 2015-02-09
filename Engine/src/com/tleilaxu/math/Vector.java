@@ -4,6 +4,8 @@ public class Vector {
 	private double[] c;
 
 	public Vector(double... ds) {
+		if (ds.length < 2)
+			throw new IllegalArgumentException("Vectors cannot be empty, and must be bigger then 2");
 		c = ds;
 	}
 
@@ -26,7 +28,7 @@ public class Vector {
 
 	public void addVec(Vector v) {
 		if (!Vector.areEqualSize(this, v))
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Vectors are not equal size" + this + v);
 		for (int i = 0; i < v.getSize(); i++) {
 			c[i] += v.getValues()[i];
 		}
@@ -47,6 +49,9 @@ public class Vector {
 			c[i] *= v.getValues()[i];
 		}
 	}
+	public void multiplyByMatrix(Matrix m) {
+		c = getMultipliedByMatrix(m).getValues();
+	}
 
 	public void normalize() {
 		divide(getLenght());
@@ -65,7 +70,7 @@ public class Vector {
 	public double[] getValues() {
 		return c;
 	}
-	public double getValue(int i){
+	public double getValue(int i) {
 		return c[i];
 	}
 
@@ -144,16 +149,14 @@ public class Vector {
 			if (i2 >= c.length) {
 				i2 = i2 - c.length;
 			}
-			rv.setValue(i,
-					v1.getValues()[i1] * v2.getValues()[i2]
-							- v1.getValues()[i2] * v2.getValues()[i1]);
+			rv.setValue(i, v1.getValues()[i1] * v2.getValues()[i2] - v1.getValues()[i2] * v2.getValues()[i1]);
 		}
 		return rv;
 	}
 
 	public double getDot(Vector v) {
 		if (!Vector.areEqualSize(this, v))
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Vectors are not equal size" + this + ": " + getSize() + " " + v + ": " + v.getSize());
 		double dot = 0;
 		for (int i = 0; i < c.length; i++) {
 			dot += c[i] * v.getValues()[i];

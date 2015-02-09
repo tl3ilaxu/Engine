@@ -9,6 +9,10 @@ public abstract class Entity {
 	public Entity(Vector pos) {
 		this.pos = new TRSMatrix(pos, new Vector(1, 1), 0);
 	}
+	public Entity(TRSMatrix pos) {
+		this.pos = pos;
+	}
+	
 	public abstract void render(Screen screen);
 	public abstract void update();
 

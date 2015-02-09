@@ -2,6 +2,7 @@ package com.tleilaxu.geometry;
 
 import com.tleilaxu.entity.DrawableEntity;
 import com.tleilaxu.graphics.images.Image;
+import com.tleilaxu.graphics.images.ImageEditor;
 import com.tleilaxu.math.Vector;
 
 public class Geometry {
@@ -65,6 +66,26 @@ public class Geometry {
 
 	public static DrawableEntity generateLine(Vector p1, Vector p2, int color) {
 		return generateLine((int) p1.getValue(0), (int) p1.getValue(1), (int) p2.getValue(0), (int) p2.getValue(1), color);
+	}
+	//@params local points
+	public static Image generatePolygon(Vector[] points){
+		if(points.length < 2)throw new IllegalArgumentException("A polygon must have at least 2 points");
+		int w = 0;
+		int h = 0;
+		for (int i = 0; i < points.length; i++) {
+			if (points[0].getValue(0) > w)
+				w = (int) points[0].getValue(0);
+			if (points[1].getValue(1) > h)
+				h = (int) points[1].getValue(1);
+		}
+		Image image = new Image(w, h);
+		for (int i = 0; i < points.length - 1; i++) {
+			DrawableEntity e = Geometry.generateLine(points[i], points[i + 1], 0xffffffff);
+			image = ImageEditor.blendImages(new DrawableEntity(0, 0, image), e);
+		}
+		DrawableEntity e = Geometry.generateLine(points[points.length - 1], points[0], 0xffffffff);
+		image = ImageEditor.blendImages(new DrawableEntity(0, 0, image), e);
+		return image;
 	}
 
 }

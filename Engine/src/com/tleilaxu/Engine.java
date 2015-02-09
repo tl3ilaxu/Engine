@@ -2,6 +2,7 @@ package com.tleilaxu;
 
 import java.awt.BorderLayout;
 import java.awt.Canvas;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -13,6 +14,7 @@ import com.tleilaxu.entity.Polygon;
 import com.tleilaxu.entity.TRSMatrix;
 import com.tleilaxu.graphics.Screen;
 import com.tleilaxu.level.Level;
+import com.tleilaxu.math.Matrix;
 import com.tleilaxu.math.Vector;
 
 public class Engine extends Canvas implements Runnable {
@@ -33,6 +35,7 @@ public class Engine extends Canvas implements Runnable {
 		frame = new JFrame(TITLE);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		frame.setMinimumSize(new Dimension(100,100));
 		frame.setLayout(new BorderLayout());
 		frame.add(this);
 		frame.setVisible(true);
@@ -42,7 +45,9 @@ public class Engine extends Canvas implements Runnable {
 
 		screen = new Screen(frame.getWidth(), frame.getHeight());
 		level = new Level();
-		Polygon p = new Polygon(new Vector(50, 50), 5, 100);
+		Polygon p = new Polygon(new TRSMatrix(new Vector(100, 100), new Vector(50, 50), Math.toRadians(0)), new Vector[]{
+				new Vector(-1, -1, 0), new Vector(1, -1, 0), new Vector(1, 1, 0), new Vector(-1, 1, 0)});
+//		Polygon p = new Polygon(new TRSMatrix(new Vector(100, 100), new Vector(50, 50), Math.toRadians(45)), 5,50);
 		level.add(p);
 
 	}

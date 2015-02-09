@@ -6,7 +6,10 @@ import com.tleilaxu.math.Vector;
 
 public class DrawableEntity extends Entity {
 	protected Image image;
-
+	public DrawableEntity(TRSMatrix pos, Image image) {
+		super(pos);
+		this.image = image;
+	}
 	public DrawableEntity(Vector pos, Image image) {
 		super(pos);
 		this.image = image;
