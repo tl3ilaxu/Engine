@@ -35,7 +35,7 @@ public class Engine extends Canvas implements Runnable {
 		frame = new JFrame(TITLE);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		frame.setMinimumSize(new Dimension(100,100));
+		frame.setMinimumSize(new Dimension(100, 100));
 		frame.setLayout(new BorderLayout());
 		frame.add(this);
 		frame.setVisible(true);
@@ -47,7 +47,8 @@ public class Engine extends Canvas implements Runnable {
 		level = new Level();
 		Polygon p = new Polygon(new TRSMatrix(new Vector(100, 100), new Vector(50, 50), Math.toRadians(0)), new Vector[]{
 				new Vector(-1, -1, 0), new Vector(1, -1, 0), new Vector(1, 1, 0), new Vector(-1, 1, 0)});
-//		Polygon p = new Polygon(new TRSMatrix(new Vector(100, 100), new Vector(50, 50), Math.toRadians(45)), 5,50);
+		// Polygon p = new Polygon(new TRSMatrix(new Vector(100, 100), new
+		// Vector(50, 50), Math.toRadians(45)), 5,50);
 		level.add(p);
 
 	}

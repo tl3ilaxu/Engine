@@ -8,7 +8,6 @@ import com.tleilaxu.graphics.images.ImageEditor;
 import com.tleilaxu.math.Vector;
 
 public class Polygon extends DrawableEntity {
-	ArrayList<Entity> list = new ArrayList<Entity>();
 
 	public Polygon(TRSMatrix pos, Vector[] points) {
 		super(pos, new Image(0, 0));
@@ -47,11 +46,16 @@ public class Polygon extends DrawableEntity {
 		}
 		for (int i = 0; i < points.length; i++) {
 			points[i].addVec(new Vector(-sw, -sh, 1));
-			System.out.println(points[i]);
 		}
+	}
+	public void rebuild(){
+		
 	}
 	public void update() {
 		super.update();
+		pos.rotate(Math.toRadians(1));
+		pos.rebuild();
+//		System.out.println(pos.getMatrix());
 
 	}
 

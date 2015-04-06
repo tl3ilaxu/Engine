@@ -10,7 +10,18 @@ public class Matrix {
 	public void multiplyMatrix(Matrix m) {
 		vectors = getMultipliedMatrix(m).getVectors();
 	}
-
+	public void addMatrix(Matrix m) {
+		if (m.getHeight() != getHeight() || m.getWidth() != getWidth())
+			throw new IllegalArgumentException("Cannot add matrixes of different sizes");
+		vectors = getAddedMatrix(m).getVectors();
+	}
+	public Matrix getAddedMatrix(Matrix m) {
+		Vector[] vectors = new Vector[this.vectors.length];
+		for (int i = 0; i < vectors.length; i++) {
+			vectors[i] = this.vectors[i].getAddedVec(m.getVector(i));
+		}
+		return new Matrix(vectors);
+	}
 	public Matrix getMultipliedMatrix(Matrix m) {
 		if (getWidth() != m.getHeight())
 			throw new IllegalArgumentException("Matrix heights not the same");
@@ -60,13 +71,12 @@ public class Matrix {
 		}
 		return v;
 	}
-	public void setVector(int i, Vector v){
+	public void setVector(int i, Vector v) {
 		vectors[i] = v;
 	}
-	
+
 	public String toString() {
-		String returnString = "------- \n";
-		;
+		String returnString = "------- \n";;
 		for (int i = 0; i < getHeight(); i++) {
 			for (int j = 0; j < getWidth(); j++) {
 				returnString += getElementAt(j, i) + " ";
@@ -75,14 +85,15 @@ public class Matrix {
 		}
 		return returnString + "-------";
 	}
-	public static Matrix getIdent(int s){
+	public static Matrix getIdent(int s) {
 		Vector[] vect = new Vector[s];
-		
+
 		for (int i = 0; i < vect.length; i++) {
 			double[] vals = new double[s];
 			for (int j = 0; j < s; j++) {
 				vals[j] = 0;
-				if(j == i)vals[j] = 1;
+				if (j == i)
+					vals[j] = 1;
 			}
 			vect[i] = new Vector(vals);
 		}
